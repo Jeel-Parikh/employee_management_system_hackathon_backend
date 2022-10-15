@@ -54,16 +54,16 @@ const showAttendanceByIdAndDate = ((req, res) => {
         .catch(err => console.log("error in show attendance", err));
 })
 
-const showAttendanceByIdAndMonth = ((req, res) => {
+const showAttendanceByIdAndMonthAndYear = ((req, res) => {
 
-    Attendance.find({ userId: req.params.id, status: true, "$expr": { "$eq": [{ "$month": "$date" }, Number(req.params.month)] } })
+    Attendance.find({ userId: req.params.id, status: true, "$expr": { "$eq": [{ "$month": "$date" }, Number(req.params.month)]  },"$expr": { "$eq": [{ "$year": "$date" }, Number(req.params.year)]  } })
         .then((result) => {
 
             let data = result.map((key)=>({
                 [key.date.getDate()]:key.status
 
             }))
-            var dataObj = Object.assign({}, ...data )
+            let dataObj = Object.assign({}, ...data )
             res.json({ response: true, result: dataObj });
         })
         .catch(err => console.log("error in addUserDetail", err));
@@ -75,7 +75,7 @@ const controller = {
     showAttendance: showAttendance,
     showAttendanceById: showAttendanceById,
     showAttendanceByIdAndDate: showAttendanceByIdAndDate,
-    showAttendanceByIdAndMonth: showAttendanceByIdAndMonth
+    showAttendanceByIdAndMonthAndYear: showAttendanceByIdAndMonthAndYear
 };
 
 export default controller;
