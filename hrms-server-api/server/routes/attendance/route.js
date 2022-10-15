@@ -4,7 +4,7 @@ import auth from '../../services/auth';
 
 const routes = express.Router();
 
-routes.post('/:id', auth, controller.addAttendanceById);
+routes.post('/', auth, controller.addAttendanceById);
 
 routes.get("/", auth, controller.showAttendance)
 

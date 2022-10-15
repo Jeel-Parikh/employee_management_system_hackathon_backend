@@ -1,21 +1,28 @@
 import Attendance from "../../models/Attendance"
 import getCurrentDate from "../../services/date"
 
-const addAttendanceById = ((req, res) => {
+const addAttendanceById = (async (req, res) => {
 
-    Attendance.create({ userId: req.params.id, date: getCurrentDate(), status: req.body.status })
+    const { data } = req.body
+    console.log("==========>", data)
+    const addUser = (id) => {
+        Attendance.create({ userId: id, date: getCurrentDate(), status: data[id] })
 
-        .then((resul) => {
+            .then((resul) => {
 
-            Attendance.findOne({ "_id": resul._id }).populate("userId")
-                .then((result) => {
-                    res.json({ response: true, result: result })
-                })
+                Attendance.findOne({ "_id": resul._id }).populate("userId")
+                    .then((result) => {
+                        res.json({ response: true, result: result })
+                    })
 
-                .catch(err => console.log('error', err))
-        })
+                    .catch(err => console.log('error', err))
+            })
 
-        .catch(err => console.log("error in markAttendance", err));
+            .catch(err => console.log("error in markAttendance", err));
+    }
+    for (let i in data) {
+        await addUser(i)
+    }
 
 })
 

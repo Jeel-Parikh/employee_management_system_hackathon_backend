@@ -24,7 +24,7 @@ const loginUser = (async (req, res) => {
         let token = jwt.sign(payload, secretKey,
           { expiresIn: "2h" })
         console.log("token", token)
-       
+
         resObj.message = "User login successfully"
         resObj.type = "success"
         resObj.data = user
