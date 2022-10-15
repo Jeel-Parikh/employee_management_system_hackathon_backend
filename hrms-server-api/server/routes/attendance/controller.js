@@ -4,7 +4,7 @@ import getCurrentDate from "../../services/date"
 const addAttendanceById = (async (req, res) => {
 
     const { data } = req.body
-    console.log("==========>", data)
+    // console.log("==========>", data)
     const addUser = (id) => {
         Attendance.create({ userId: id, date: getCurrentDate(), status: data[id] })
 

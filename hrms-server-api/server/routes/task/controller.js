@@ -74,7 +74,8 @@ const updateTaskStatus = ((req, res) => {
     // console.log("req.params.date", new Date(req.params.date))
     console.log("req.body._id---->", req.body._id)
 
-    Task.findOneAndUpdate({ userId: req.params.id, date: new Date(req.params.date), "task._id": req.body._id }, { "task.$.status": req.body.status }, { runValidators: true, new: true }).populate("userId")
+    // Task.findOneAndUpdate({ userId: req.params.id, date: new Date(req.params.date), "task._id": req.body._id }, { "task.$.status": req.body.status }, { runValidators: true, new: true }).populate("userId")
+    Task.findOneAndUpdate({ "task._id": req.params.id }, { "task.$.status": req.body.status }, { runValidators: true, new: true }).populate("userId")
         .then((result) => {
             // console.log("------->result", result)
             // return

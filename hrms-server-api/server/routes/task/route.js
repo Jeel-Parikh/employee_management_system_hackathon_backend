@@ -12,6 +12,6 @@ routes.get("/:id",auth, controller.showTaskById)
 
 routes.get('/:id/:date',auth,controller.showTaskByIdAndDate)
 
-routes.put('/:id/:date',auth,controller.updateTaskStatus)
+routes.put('/:id',auth,controller.updateTaskStatus)
 
 export default routes;
