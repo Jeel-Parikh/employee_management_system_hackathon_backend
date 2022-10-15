@@ -56,12 +56,32 @@ const showAttendanceByIdAndDate = ((req, res) => {
 
 const showAttendanceByIdAndMonthAndYear = ((req, res) => {
 
-    Attendance.find({ userId: req.params.id, status: true, "$expr": { "$eq": [{ "$month": "$date" }, Number(req.params.month)]  },"$expr": { "$eq": [{ "$year": "$date" }, Number(req.params.year)]  } })
+    Attendance.find({ userId: req.params.id, status: true, "$expr": {
+        "$and": [
+            {
+              "$eq": [
+                {
+                 "$month": "$date"
+               },
+                Number(req.params.month)
+           ]
+         },
+         {
+           "$eq": [
+               {
+             "$year": "$date"
+              },
+              Number(req.params.year)
+             ]
+           }
+        ]
+       }
+      })
         .then((result) => {
 
             let date = new Date(`${req.params.month}-01-${req.params.year}`)
 
-
+            // let dataObj =
             let data = result.map((key)=>({
                 [key.date.getDate()]:key.status
 
