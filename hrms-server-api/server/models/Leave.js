@@ -28,11 +28,8 @@ const LeaveSchema = new mongoose.Schema({
     admin_response: {
         type: String,
         required: true,
+        default:"pending",
         enum: ["pending", "approved", "denied"]
-    },
-    type: {
-        type: String,
-        required: true
     }
 })
 const Leave = mongoose.model("leave", LeaveSchema)
