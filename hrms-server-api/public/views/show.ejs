@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>show</title>
+</head>
+
+<body>
+    
+    <!-- aadhar_card: <img src="/Users/apple/hrms-helper/uploads/documents/pan_card-1657025912636.png" />
+    pan_card: <img src="/Users/apple/hrms-helper/uploads/documents/aadhar_card-1657025912612.png" height="100px" width="100px" /> -->
+    aadhar_card:
+        <img src="<%= service.API_URL %><%= u.aadhar_card %> " height="100px" width="100px" alt="">
+    pan_card:
+        <img src="<%= service.API_URL %><%= u.pan_card %> " height="100px" width="100px" alt="">
+    name: <%= u.name %>
+    DOB: <h1>
+        <%= u.DOB.getDate() %>/<% month=u.DOB.getMonth()+1 %><%= month %>/<%= u.DOB.getFullYear() %>
+    </h1> 
+
+</body>
+
+</html>
