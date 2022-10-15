@@ -6,6 +6,7 @@ import userRoute from './user';
 import authRoute from './auth';
 import taskRoute from './task';
 import attendanceRoute from './attendance'
+import leaveRoute from './leave'
 
 var router = express.Router();
 
@@ -14,10 +15,11 @@ router.use('/user', userRoute);
 
 router.use('/auth', authRoute);
 
-router.use('/task',taskRoute);
+router.use('/task', taskRoute);
 
-router.use('/attendance',attendanceRoute);
+router.use('/attendance', attendanceRoute);
 
+router.use("/leave", leaveRoute)
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
