@@ -55,6 +55,12 @@ var UserSchema = new mongoose.Schema({
     },
     bankName: {
         type: String
+    },
+    lastEmployment: {
+        type: String
+    },
+    salary: {
+        type: Number
     }
 })
 const User = mongoose.model("user", UserSchema)
