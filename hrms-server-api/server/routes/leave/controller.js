@@ -5,7 +5,7 @@ const addLeaveById = ((req, res) => {
     // const { startDate, endDate,reason,title,admin_response,type } = req.body
     let reqObj = req.body
     reqObj.userId = req.params.id
-    reqObj.appliedDate = getCurrentDate()
+    reqObj.appliedDate = getCurrentDate(new Date())
     // console.log("===============", reqObj)
     Leave.create(reqObj)
         .then((resul) => {

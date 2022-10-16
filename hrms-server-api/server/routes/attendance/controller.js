@@ -3,12 +3,12 @@ import getCurrentDate from "../../services/date"
 
 const addAttendanceById = (async (req, res) => {
 
-    const { data } = req.body
+    const { data, date } = req.body
     // console.log("==========>", data)
     const addUser = async (id) => {
-        Attendance.findOne({ userId: id, date: getCurrentDate() })
+        Attendance.findOne({ userId: id, date: getCurrentDate(date) })
             .then((result) => {
-                Attendance.findByIdAndUpdate(result._id, { userId: id, date: getCurrentDate(), status: data[id] })
+                Attendance.findByIdAndUpdate(result._id, { userId: id, date: getCurrentDate(date), status: data[id] })
                     .then((resul) => {
                         Attendance.findOne({ "_id": resul._id }).populate("userId")
                             .then((result) => {
@@ -21,7 +21,7 @@ const addAttendanceById = (async (req, res) => {
             })
             .catch((e) => {
 
-                Attendance.create({ userId: id, date: getCurrentDate(), status: data[id] })
+                Attendance.create({ userId: id, date: getCurrentDate(date), status: data[id] })
 
                     .then((resul) => {
 
@@ -88,23 +88,14 @@ const showAttendanceByIdAndMonthAndYear = ((req, res) => {
         .catch(err => console.log("error in addUserDetail", err));
 })
 
-const updateAttendanceByIdAndDate = ((req, res) => {
+const showAttendanceByDate = ((req, res) => {
 
-    Attendance.find({
-        userId: req.params.id, status: true, "$expr": { "$and": [{ "$eq": [{ "$month": "$date" }, Number(req.params.month)] }, { "$eq": [{ "$year": "$date" }, Number(req.params.year)] }] }
-    })
+    Attendance.find({ date: getCurrentDate(req.params.date) }).populate("userId")
         .then((result) => {
 
-            let date = new Date(`${req.params.month}-01-${req.params.year}`)
-
-            // let dataObj =
-            let data = result.map((key) => ({
-                [key.date.getDate()]: key.status
-            }))
-            let dataObj = Object.assign({}, ...data)
-            res.json({ response: true, result: dataObj, firstDay: date.getDay() });
+            res.json({ response: true, result: result });
         })
-        .catch(err => console.log("error in addUserDetail", err));
+        .catch(err => console.log("error in show attendance", err));
 })
 
 
@@ -114,7 +105,7 @@ const controller = {
     showAttendanceById: showAttendanceById,
     showAttendanceByIdAndDate: showAttendanceByIdAndDate,
     showAttendanceByIdAndMonthAndYear: showAttendanceByIdAndMonthAndYear,
-    updateAttendanceByIdAndDate: updateAttendanceByIdAndDate
+    showAttendanceByDate: showAttendanceByDate
 };
 
 export default controller;

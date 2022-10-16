@@ -2,7 +2,7 @@ import Task from "../../models/Task";
 import getCurrentDate from "../../services/date";
 
 const addTaskById = (req, res) => {
-	Task.findOne({ userId: req.params.id, date: getCurrentDate() })
+	Task.findOne({ userId: req.params.id, date: getCurrentDate(new Date()) })
 		.then((result) => {
 			Task.findByIdAndUpdate(result._id, {
 				$push: {
@@ -30,15 +30,7 @@ const addTaskById = (req, res) => {
 		.catch((e) => {
 			// Task.create({ userId: req.params.id, task: { title: req.body.title, description: req.body.description, date: Date.now(), status: req.body.status }, date: getCurrentDate() })
 
-			Task.create({
-				userId: req.params.id,
-				task: {
-					title: req.body.title,
-					description: req.body.description,
-					date: Date.now(),
-					status: req.body.status,
-				},
-				date: getCurrentDate(),
+			Task.create({ userId: req.params.id,task: { title: req.body.title, description: req.body.description, date: Date.now(), status: req.body.status, }, date: getCurrentDate(new Date()),
 			})
 
 				.then((resul) => {

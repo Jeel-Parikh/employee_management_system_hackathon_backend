@@ -10,9 +10,9 @@ routes.get("/", auth, controller.showAttendance)
 
 routes.get("/:id", auth, controller.showAttendanceById)
 
-routes.get('/date/:id/', auth, controller.showAttendanceByIdAndDate)
+routes.get('/date/:date/', auth, controller.showAttendanceByIdAndDate)
 
-routes.put('/:id', auth, controller.updateAttendanceByIdAndDate)
+routes.get('/date/', auth, controller.showAttendanceByDate)
 
 routes.get('/:id/:year/:month', auth, controller.showAttendanceByIdAndMonthAndYear)
 
