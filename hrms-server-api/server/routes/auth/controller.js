@@ -1,9 +1,4 @@
 import User from "../../models/User"
-import Task from "../../models/Task"
-import Project from "../../models/Project"
-import multer from 'multer';
-import path from 'path';
-import express from "express";
 import { secretKey } from "../../services/constant";
 import jwt from "jsonwebtoken"
 import md5 from "md5";
