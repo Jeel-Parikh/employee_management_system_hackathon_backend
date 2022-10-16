@@ -4,7 +4,7 @@ import getCurrentDate from "../../services/date"
 const addAttendanceById = (async (req, res) => {
 
     const { data, date } = req.body
-    console.log("==========>", date)
+    // console.log("==========>", date)
     const addUser = async (id) => {
         Attendance.findOne({ userId: id, date: getCurrentDate(date) })
             .then((result) => {
@@ -59,16 +59,6 @@ const showAttendanceById = ((req, res) => {
 })
 
 
-const showAttendanceByIdAndDate = ((req, res) => {
-
-    Attendance.findOne({ userId: req.params.id, date: new Date('"' + req.body.date + '"') }).populate("userId")
-        .then((result) => {
-
-            res.json({ response: true, result: data });
-        })
-        .catch(err => console.log("error in show attendance", err));
-})
-
 const showAttendanceByIdAndMonthAndYear = ((req, res) => {
 
     Attendance.find({
@@ -103,7 +93,6 @@ const controller = {
     addAttendanceById: addAttendanceById,
     showAttendance: showAttendance,
     showAttendanceById: showAttendanceById,
-    showAttendanceByIdAndDate: showAttendanceByIdAndDate,
     showAttendanceByIdAndMonthAndYear: showAttendanceByIdAndMonthAndYear,
     showAttendanceByDate: showAttendanceByDate
 };
