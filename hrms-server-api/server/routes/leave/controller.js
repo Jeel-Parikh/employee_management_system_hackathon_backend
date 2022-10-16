@@ -43,7 +43,7 @@ const updateLeaveStatus = ((req, res) => {
     // console.log("===============", req.body.admin_response)
 
     // Leave.findOneAndUpdate({ userId: req.params.id, date: new Date(req.params.date), "Leave._id": req.body._id }, { "Leave.$.status": req.body.status }, { runValidators: true, new: true }).populate("userId")
-    Leave.findOneAndUpdate(req.params.id, { admin_response: req.body.admin_response }, { runValidators: true, new: true }).populate("userId")
+    Leave.findByIdAndUpdate(req.params.id, { admin_response: req.body.admin_response }, { runValidators: true, new: true }).populate("userId")
         .then((result) => {
             // console.log("------->result", result)
             // return
