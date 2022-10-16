@@ -32,7 +32,7 @@ const showLeaves = ((req, res) => {
 })
 
 const showLeavesById = ((req, res) => {
-    Leave.findById(req.params.id).populate("userId").lean(true)
+    Leave.find({ userId: req.params.id }).populate("userId").lean(true)
         .then((result) => {
             res.json({ response: true, result: result });
         })
