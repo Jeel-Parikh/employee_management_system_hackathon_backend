@@ -82,8 +82,8 @@ const showAttendanceByDate = ((req, res) => {
 
     Attendance.find({ date: getCurrentDate(req.params.date) }).populate("userId")
         .then((result) => {
-
-            res.json({ response: true, result: result });
+            // console.log("==============",result.length)
+            res.json({ response: true, result: result, count: result.length });
         })
         .catch(err => console.log("error in show attendance", err));
 })
