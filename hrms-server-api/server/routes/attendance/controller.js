@@ -4,7 +4,7 @@ import getCurrentDate from "../../services/date"
 const addAttendanceById = (async (req, res) => {
 
     const { data, date } = req.body
-    // console.log("==========>", data)
+    console.log("==========>", date)
     const addUser = async (id) => {
         Attendance.findOne({ userId: id, date: getCurrentDate(date) })
             .then((result) => {
