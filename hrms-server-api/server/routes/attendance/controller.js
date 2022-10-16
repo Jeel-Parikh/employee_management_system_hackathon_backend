@@ -88,13 +88,33 @@ const showAttendanceByIdAndMonthAndYear = ((req, res) => {
         .catch(err => console.log("error in addUserDetail", err));
 })
 
+const updateAttendanceByIdAndDate = ((req, res) => {
+
+    Attendance.find({
+        userId: req.params.id, status: true, "$expr": { "$and": [{ "$eq": [{ "$month": "$date" }, Number(req.params.month)] }, { "$eq": [{ "$year": "$date" }, Number(req.params.year)] }] }
+    })
+        .then((result) => {
+
+            let date = new Date(`${req.params.month}-01-${req.params.year}`)
+
+            // let dataObj =
+            let data = result.map((key) => ({
+                [key.date.getDate()]: key.status
+            }))
+            let dataObj = Object.assign({}, ...data)
+            res.json({ response: true, result: dataObj, firstDay: date.getDay() });
+        })
+        .catch(err => console.log("error in addUserDetail", err));
+})
+
 
 const controller = {
     addAttendanceById: addAttendanceById,
     showAttendance: showAttendance,
     showAttendanceById: showAttendanceById,
     showAttendanceByIdAndDate: showAttendanceByIdAndDate,
-    showAttendanceByIdAndMonthAndYear: showAttendanceByIdAndMonthAndYear
+    showAttendanceByIdAndMonthAndYear: showAttendanceByIdAndMonthAndYear,
+    updateAttendanceByIdAndDate: updateAttendanceByIdAndDate
 };
 
 export default controller;

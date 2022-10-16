@@ -21,14 +21,15 @@ const LeaveSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    title: {
+    type: {
         type: String,
-        required: true
+        required: true,
+        enum: ["PL", "EL", "AL", "CL", "SL", "ML"]
     },
     admin_response: {
         type: String,
         required: true,
-        default:"pending",
+        default: "pending",
         enum: ["pending", "approved", "denied"]
     }
 })
