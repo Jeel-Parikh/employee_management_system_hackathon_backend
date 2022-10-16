@@ -4,25 +4,41 @@ import getCurrentDate from "../../services/date"
 const addAttendanceById = (async (req, res) => {
 
     const { data } = req.body
-    const addUser = (id) => {
-        Attendance.create({ userId: id, date: getCurrentDate(), status: data[id] })
+    // console.log("==========>", data)
+    const addUser = async (id) => {
+        Attendance.findOne({ userId: id, date: getCurrentDate() })
+            .then((result) => {
+                Attendance.findByIdAndUpdate(result._id, { userId: id, date: getCurrentDate(), status: data[id] })
+                    .then((resul) => {
+                        Attendance.findOne({ "_id": resul._id }).populate("userId")
+                            .then((result) => {
+                                res.json({ response: true, result: result })
+                            })
 
-            .then((resul) => {
+                            .catch(err => console.log('error', err))
+                    })
+                    .catch(err => console.log("error in Mart attendance", err));
+            })
+            .catch((e) => {
 
-                Attendance.findOne({ "_id": resul._id }).populate("userId")
-                    .then((result) => {
-                        res.json({ response: true, result: result })
+                Attendance.create({ userId: id, date: getCurrentDate(), status: data[id] })
+
+                    .then((resul) => {
+
+                        Attendance.findOne({ "_id": resul._id }).populate("userId")
+                            .then((result) => {
+                                res.json({ response: true, result: result })
+                            })
+
+                            .catch(err => console.log('error', err))
                     })
 
-                    .catch(err => console.log('error', err))
+                    .catch(err => console.log("error in markAttendance", err));
             })
-
-            .catch(err => console.log("error in markAttendance", err));
     }
     for (let i in data) {
         await addUser(i)
     }
-
 })
 
 const showAttendance = ((req, res) => {
