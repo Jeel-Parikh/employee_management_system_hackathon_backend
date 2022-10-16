@@ -31,6 +31,14 @@ const showLeaves = ((req, res) => {
         .catch(err => console.log("error in leave", err));
 })
 
+const showLeavesById = ((req, res) => {
+    Leave.findById(req.params.id).populate("userId").lean(true)
+        .then((result) => {
+            res.json({ response: true, result: result });
+        })
+        .catch(err => console.log("error in leave", err));
+})
+
 const updateLeaveStatus = ((req, res) => {
     console.log("===============", req.body.admin_response)
 
@@ -48,7 +56,8 @@ const updateLeaveStatus = ((req, res) => {
 const controller = {
     addLeaveById: addLeaveById,
     showLeaves: showLeaves,
-    updateLeaveStatus: updateLeaveStatus
+    updateLeaveStatus: updateLeaveStatus,
+    showLeavesById: showLeavesById
 };
 
 export default controller;

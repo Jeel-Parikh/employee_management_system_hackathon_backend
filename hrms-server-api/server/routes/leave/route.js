@@ -8,6 +8,8 @@ routes.post('/:id', auth, controller.addLeaveById);
 
 routes.get("/", auth, controller.showLeaves)
 
+routes.get("/:id", auth, controller.showLeavesById)
+
 routes.put("/:id", auth, controller.updateLeaveStatus)
 
 
