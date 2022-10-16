@@ -4,7 +4,6 @@ import getCurrentDate from "../../services/date"
 const addAttendanceById = (async (req, res) => {
 
     const { data } = req.body
-    // console.log("==========>", data)
     const addUser = (id) => {
         Attendance.create({ userId: id, date: getCurrentDate(), status: data[id] })
 
@@ -48,7 +47,7 @@ const showAttendanceByIdAndDate = ((req, res) => {
 
     Attendance.findOne({ userId: req.params.id, date: new Date('"' + req.body.date + '"') }).populate("userId")
         .then((result) => {
-            
+
             res.json({ response: true, result: data });
         })
         .catch(err => console.log("error in show attendance", err));
@@ -56,38 +55,19 @@ const showAttendanceByIdAndDate = ((req, res) => {
 
 const showAttendanceByIdAndMonthAndYear = ((req, res) => {
 
-    Attendance.find({ userId: req.params.id, status: true, "$expr": {
-        "$and": [
-            {
-              "$eq": [
-                {
-                 "$month": "$date"
-               },
-                Number(req.params.month)
-           ]
-         },
-         {
-           "$eq": [
-               {
-             "$year": "$date"
-              },
-              Number(req.params.year)
-             ]
-           }
-        ]
-       }
-      })
+    Attendance.find({
+        userId: req.params.id, status: true, "$expr": { "$and": [{ "$eq": [{ "$month": "$date" }, Number(req.params.month)] }, { "$eq": [{ "$year": "$date" }, Number(req.params.year)] }] }
+    })
         .then((result) => {
 
             let date = new Date(`${req.params.month}-01-${req.params.year}`)
 
             // let dataObj =
-            let data = result.map((key)=>({
-                [key.date.getDate()]:key.status
-
+            let data = result.map((key) => ({
+                [key.date.getDate()]: key.status
             }))
-            let dataObj = Object.assign({}, ...data )
-            res.json({ response: true, result: dataObj ,firstDay:date.getDay()});
+            let dataObj = Object.assign({}, ...data)
+            res.json({ response: true, result: dataObj, firstDay: date.getDay() });
         })
         .catch(err => console.log("error in addUserDetail", err));
 })
