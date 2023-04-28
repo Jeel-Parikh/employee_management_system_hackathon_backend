@@ -24,9 +24,10 @@ const addLeaveById = ((req, res) => {
 
 
 const showLeaves = ((req, res) => {
-    Leave.find().populate("userId").lean(true)
+    Leave.find().populate("userId")
         .then((result) => {
-            res.json({ response: true, result: result });
+            console.log(result)
+            res.json({ response: true, result: JSON.stringify(result) });
         })
         .catch(err => console.log("error in leave", err));
 })
