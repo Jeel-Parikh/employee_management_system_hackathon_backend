@@ -31,6 +31,10 @@ const LeaveSchema = new mongoose.Schema({
         required: true,
         default: "pending",
         enum: ["pending", "approved", "denied"]
+    }, 
+    totalDays: {
+        type: Number,
+        default: 0
     }
 })
 const Leave = mongoose.model("leave", LeaveSchema)
