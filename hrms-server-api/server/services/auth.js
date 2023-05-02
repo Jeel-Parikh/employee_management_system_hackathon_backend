@@ -8,6 +8,7 @@ const auth = async (req, res, next) => {
     const decodedToken = await jwt.verify(token, secretKey);
     const userId = decodedToken.user._id;
     const validUser = await User.findById(userId)
+    res.locals.designation = validUser.designation;
     if (validUser) {
       next();
     }

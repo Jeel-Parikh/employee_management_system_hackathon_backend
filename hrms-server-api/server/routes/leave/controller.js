@@ -19,7 +19,7 @@ const addLeaveById = ((req, res) => {
             for (let i of result) {
                 total += i.totalDays
             }
-            if (total + totalDays > 12) {
+            if (total + totalDays > 12 && res.locals.designation != 'admin') {
                 return res.json({ response: false, result: "you have exceeded your limit of 12 paid leaves." })
             }
             reqObj.totalDays = totalDays
